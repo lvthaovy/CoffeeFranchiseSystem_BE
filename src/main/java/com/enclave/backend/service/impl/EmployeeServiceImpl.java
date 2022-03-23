@@ -40,26 +40,40 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee createEmployee(EmployeeDTO dto) {
-        Branch branch = branchRepository.findById(dto.getBranchId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + dto.getBranchId()));
-        Role role = roleRepository.findById(dto.getRoleId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid role Id:" + dto.getRoleId()));
+        Branch branch = branchRepository.findById(dto.getBranchId()).orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + dto.getBranchId()));
+        Role role = roleRepository.findById(dto.getRoleId()).orElseThrow(() -> new IllegalArgumentException("Invalid role Id:" + dto.getRoleId()));
 
         Employee newEmployee = employeeConverter.toEntity(dto);
-            newEmployee.setRole(role);
-            newEmployee.setBranch(branch);
-            newEmployee.setPassword(passwordEncode.encode(dto.getPassword()));
-            employeeRepository.save(newEmployee);
+        newEmployee.setRole(role);
+        newEmployee.setBranch(branch);
+        newEmployee.setPassword(passwordEncode.encode(dto.getPassword()));
+        employeeRepository.save(newEmployee);
         return newEmployee;
     }
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        Employee oldEmployee = employeeRepository.findById(employee.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + employee.getId()));
+        Employee oldEmployee = employeeRepository.findById(employee.getId()).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + employee.getId()));
 
+        short id = employee.getBranch().getId();
 
-        return null;
+        Branch branch = branchRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + employee.getBranch().getId()));
+
+        oldEmployee.setName(employee.getName());
+        oldEmployee.setPhone(employee.getPhone());
+        oldEmployee.setBirth(employee.getBirth());
+        oldEmployee.setAvatar(employee.getAvatar());
+        oldEmployee.setGender(employee.getGender());
+        oldEmployee.setAddress(employee.getAddress());
+        oldEmployee.setUsername(employee.getUsername());
+        oldEmployee.setBranch(branch);
+        oldEmployee.setPassword(employee.getPassword());
+        return employeeRepository.save(oldEmployee);
+    }
+
+    @Override
+    public Employee getEmployeeById(short id) {
+        return employeeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
     }
 
     @Override
@@ -70,19 +84,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Employee user = employeeRepository.findByUsername(username);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password");
         }
 
 //		return new User(user.getUsername(), user.getPassword(), authorities);
         return new CustomUserDetails(user);
     }
+
     @Transactional
     public UserDetails loadUserById(Short id) {
         Optional<Employee> optionalUser = employeeRepository.findById(id);
         Employee user = optionalUser.get();
-        if(user == null) {
-            throw	new UsernameNotFoundException("user not found: " + id);
+        if (user == null) {
+            throw new UsernameNotFoundException("user not found: " + id);
         }
         return new CustomUserDetails(user);
     }

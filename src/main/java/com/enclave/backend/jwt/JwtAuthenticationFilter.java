@@ -1,6 +1,5 @@
 package com.enclave.backend.jwt;
 
-import com.enclave.backend.service.EmployeeService;
 import com.enclave.backend.service.impl.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,7 +39,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-
             }
         } catch (Exception e) {
             System.out.println("failed on set user authentication " + e);

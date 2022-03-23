@@ -1,14 +1,13 @@
 package com.enclave.backend.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="employee")
-public class Employee extends AbstractUser{
+@Table(name = "employee")
+public class Employee extends AbstractUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -27,5 +26,4 @@ public class Employee extends AbstractUser{
     @ManyToOne
 //    @JoinColumn(name = "role_id")
     private Role role;
-
 }

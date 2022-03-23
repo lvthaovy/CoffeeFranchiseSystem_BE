@@ -8,6 +8,10 @@ import java.util.List;
 
 public interface EmployeeService extends UserDetailsService {
     Employee createEmployee(EmployeeDTO dto);
+
     Employee updateEmployee(Employee employee);
+
+    Employee getEmployeeById(short id);
+
     List<Employee> getEmployees();
 }
