@@ -67,7 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         oldEmployee.setAddress(employee.getAddress());
         oldEmployee.setUsername(employee.getUsername());
         oldEmployee.setBranch(branch);
-        oldEmployee.setPassword(employee.getPassword());
+        oldEmployee.setPassword(passwordEncode.encode(employee.getPassword()));
         return employeeRepository.save(oldEmployee);
     }
 
