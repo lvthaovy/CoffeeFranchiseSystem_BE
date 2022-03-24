@@ -55,7 +55,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(oldProduct);
     }
 
-
     @Override
     public List<Product> getProducts() {
         return productRepository.findAll();

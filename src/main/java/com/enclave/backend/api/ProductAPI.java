@@ -27,12 +27,6 @@ public class ProductAPI {
         return productService.updateProduct(product);
     }
 
-//    @PutMapping("/product/{id}")
-//    public Product updateProduct( @RequestBody ProductDTO product) {
-//        System.out.println(product.getCategoryId());
-//        return productService.updateProduct(product);
-//    }
-
     @GetMapping("/products")
     public List<Product> getProducts() {
         return productService.getProducts();
