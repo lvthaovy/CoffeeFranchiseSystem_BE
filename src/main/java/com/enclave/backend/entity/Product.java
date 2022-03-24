@@ -25,5 +25,5 @@ public class Product {
     private String image;
 
     @Column
-    private float price;
+    private double price;
 }

@@ -24,40 +24,44 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    BranchRepository branchRepository;
+    private BranchRepository branchRepository;
 
     @Autowired
-    EmployeeConverter employeeConverter;
+    private EmployeeConverter employeeConverter;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncode;
 
     @Override
     public Employee createEmployee(EmployeeDTO dto) {
-        Branch branch = branchRepository.findById(dto.getBranchId()).orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + dto.getBranchId()));
-        Role role = roleRepository.findById(dto.getRoleId()).orElseThrow(() -> new IllegalArgumentException("Invalid role Id:" + dto.getRoleId()));
+        short branchId = dto.getBranchId();
+        Branch branch = branchRepository.findById(branchId).orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + branchId));
+
+        short roleId = dto.getRoleId();
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new IllegalArgumentException("Invalid role Id:" + roleId));
 
         Employee newEmployee = employeeConverter.toEntity(dto);
         newEmployee.setRole(role);
         newEmployee.setBranch(branch);
         newEmployee.setPassword(passwordEncode.encode(dto.getPassword()));
-        employeeRepository.save(newEmployee);
-        return newEmployee;
+        return employeeRepository.save(newEmployee);
     }
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        Employee oldEmployee = employeeRepository.findById(employee.getId()).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + employee.getId()));
 
-        short id = employee.getBranch().getId();
+        short employeeId = employee.getId();
+        Employee oldEmployee = employeeRepository.findById(employeeId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + employeeId));
 
-        Branch branch = branchRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + employee.getBranch().getId()));
+        short branchId = employee.getBranch().getId();
+
+        Branch branch = branchRepository.findById(branchId).orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + branchId));
 
         oldEmployee.setName(employee.getName());
         oldEmployee.setPhone(employee.getPhone());

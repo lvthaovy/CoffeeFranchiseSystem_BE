@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EmployeeConverter {
+
     public Employee toEntity(EmployeeDTO dto){
         Employee entity = new Employee();
         entity.setUsername(dto.getUsername());
@@ -17,5 +18,4 @@ public class EmployeeConverter {
         entity.setBirth(dto.getBirth());
         return entity;
     }
-
 }

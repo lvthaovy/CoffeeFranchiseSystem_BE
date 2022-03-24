@@ -1,9 +1,7 @@
 package com.enclave.backend.config;
 
 import com.enclave.backend.jwt.JwtAuthenticationFilter;
-import com.enclave.backend.service.BranchService;
 import com.enclave.backend.service.EmployeeService;
-import com.enclave.backend.service.impl.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @Bean
     public static BCryptPasswordEncoder passwordEncode() {

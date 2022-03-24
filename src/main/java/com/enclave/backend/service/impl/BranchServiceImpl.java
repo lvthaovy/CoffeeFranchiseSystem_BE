@@ -7,13 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BranchServiceImpl implements BranchService {
 
     @Autowired
-    BranchRepository branchRepository;
+    private BranchRepository branchRepository;
 
     @Override
     public Branch createBranch(String name, String address) {

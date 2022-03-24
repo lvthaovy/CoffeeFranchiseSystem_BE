@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeAPI {
 
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @PostMapping("/employee")
     public Employee createEmployee(@RequestBody EmployeeDTO dto) {

@@ -13,7 +13,7 @@ import java.util.List;
 public class ProductAPI {
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
     @PostMapping("/product")
     public Product createProduct(@RequestBody ProductDTO dto) {
@@ -31,5 +31,4 @@ public class ProductAPI {
     public List<Product> getProducts() {
         return productService.getProducts();
     }
-
 }

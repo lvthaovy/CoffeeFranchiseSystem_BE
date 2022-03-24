@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class EmployeeDTO {
+
     private short id;
     private String phone;
     private short branchId;

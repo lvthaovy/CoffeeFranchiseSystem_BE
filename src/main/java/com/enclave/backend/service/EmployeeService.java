@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 public interface EmployeeService extends UserDetailsService {
+
     Employee createEmployee(EmployeeDTO dto);
 
     Employee updateEmployee(Employee employee);

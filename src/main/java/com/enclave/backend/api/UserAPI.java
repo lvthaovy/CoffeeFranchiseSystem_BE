@@ -18,16 +18,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class UserAPI {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Autowired
     private EmployeeService employeeService;
+
     @Autowired
     private JwtTokenProvider tokenProvider;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
-
     @GetMapping("/employees")
-    public List<Employee> getEmployees(){
+    public List<Employee> getEmployees() {
         return employeeService.getEmployees();
     }
 
@@ -36,25 +38,17 @@ public class UserAPI {
         // Xác thực từ username và password.
         String jwt = "";
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(),
-                            loginRequest.getPassword()
-                    )
-            );
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
+            // Nếu không xảy ra exception tức là thông tin hợp lệ
+            // Set thông tin authentication vào Security Context
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Nếu không xảy ra exception tức là thông tin hợp lệ
-        // Set thông tin authentication vào Security Context
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // Trả về jwt cho người dùng.
-         jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());} catch (Exception e){
+            // Trả về jwt cho người dùng.
+            jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
+        } catch (Exception e) {
             System.out.println(e);
         }
         return new LoginResponse(jwt);
     }
-
-
-
 }
