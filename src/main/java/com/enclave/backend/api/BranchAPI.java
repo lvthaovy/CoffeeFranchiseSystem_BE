@@ -17,7 +17,6 @@ public class BranchAPI {
     @GetMapping("/all")
     public List<Branch> getBranches() {
         return branchService.getBranches();
-    }
 
     @PostMapping("/")
     public Branch createBranch(@RequestBody Branch branch) {

@@ -47,9 +47,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         Role role = roleRepository.findById(roleId).orElseThrow(() -> new IllegalArgumentException("Invalid role Id:" + roleId));
 
         Employee newEmployee = employeeConverter.toEntity(dto);
+
         newEmployee.setRole(role);
         newEmployee.setBranch(branch);
-        newEmployee.setPassword(passwordEncode.encode(dto.getPassword()));
+        newEmployee.setPassword(passwordEncode.encode("123123"));
+        newEmployee.setStatus("active");
+        employeeRepository.save(newEmployee);
         return employeeRepository.save(newEmployee);
     }
 

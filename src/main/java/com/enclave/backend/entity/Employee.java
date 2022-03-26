@@ -22,6 +22,8 @@ public class Employee extends AbstractUser {
     @Column
     private String username;
 
+    @Column
+    private String status;
     @ManyToOne
 //    @JoinColumn(name = "branch_id")
     private Branch branch;
