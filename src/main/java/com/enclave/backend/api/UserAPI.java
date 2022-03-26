@@ -28,7 +28,7 @@ public class UserAPI {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
-    @GetMapping("/employees")
+    @GetMapping("/employee")
     public List<Employee> getEmployees() {
         return employeeService.getEmployees();
     }

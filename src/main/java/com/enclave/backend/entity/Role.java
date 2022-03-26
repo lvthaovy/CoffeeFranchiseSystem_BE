@@ -1,8 +1,11 @@
 package com.enclave.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -17,6 +20,7 @@ public class Role {
     @Column
     private String name;
 
-//    @OneToMany(mappedBy = "role")
-//    private Set<Employee> employees = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "role")
+    private Set<Employee> employees = new HashSet<>();
 }

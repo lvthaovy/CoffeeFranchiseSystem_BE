@@ -8,7 +8,9 @@ public interface BranchService {
 
     Branch createBranch(String name, String address);
 
-    Branch updateBranch(short id, String name, String address);
+    Branch updateBranch(short id, String name, String address, String status);
 
-    List<Branch> getBranchs();
+    List<Branch> getBranches();
+
+    Branch getBranchById(short id);
 }

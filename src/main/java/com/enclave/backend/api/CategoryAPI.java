@@ -8,23 +8,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/category")
 public class CategoryAPI {
 
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/category")
+    @GetMapping("/all")
     public List<Category> getCategories() {
         return categoryService.getCategories();
     }
 
-    @PostMapping("/category")
+    @PostMapping("/")
     public Category createCategory(@RequestBody Category category) {
         return categoryService.createCategory(category.getName());
     }
 
-    @PutMapping("/category/{id}")
+    @PutMapping("/{id}")
     public Category editCategory(@PathVariable("id") short id, @RequestBody Category category) {
         return categoryService.updateCategory(id, category.getName());
     }

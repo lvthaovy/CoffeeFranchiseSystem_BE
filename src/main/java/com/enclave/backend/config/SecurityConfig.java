@@ -47,10 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/api/login").permitAll()
-                .antMatchers("/api/branch").authenticated()
-                .antMatchers("/api/employees").authenticated()
+        http.authorizeRequests().antMatchers("/api/login").permitAll()
+//                .antMatchers("/api/branch").authenticated()
+                .antMatchers("/api/branch/").hasAuthority("OWNER")
+//                .antMatchers("/api/employees").authenticated()
+                .antMatchers("/employee").hasAuthority("OWNER")
                 .and().logout();
         http.cors().and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

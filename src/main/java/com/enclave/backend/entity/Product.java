@@ -26,4 +26,7 @@ public class Product {
 
     @Column
     private double price;
+
+    @Column
+    private String status;
 }

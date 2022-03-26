@@ -1,9 +1,11 @@
 package com.enclave.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-
+import java.util.HashSet;
+import java.util.Set;
 @Data
 @Entity
 @Table(name = "branch")
@@ -18,8 +20,12 @@ public class Branch {
     private String name;
 
     @Column
-    private  String address;
+    private String address;
 
-//    @OneToMany(mappedBy = "branch")
-//    private List<Employee> employees = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "branch")
+    private Set<Employee> employees = new HashSet<>();
+
+    @Column
+    private String status;
 }

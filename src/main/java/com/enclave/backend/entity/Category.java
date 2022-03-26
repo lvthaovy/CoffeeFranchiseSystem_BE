@@ -1,8 +1,11 @@
 package com.enclave.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,4 +19,8 @@ public class Category {
 
     @Column
     private String name;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "category")
+    private Set<Product> products = new HashSet<>();
 }

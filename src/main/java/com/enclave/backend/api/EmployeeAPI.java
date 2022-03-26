@@ -15,8 +15,7 @@ public class EmployeeAPI {
 
     @PostMapping("/employee")
     public Employee createEmployee(@RequestBody EmployeeDTO dto) {
-        Employee newEmployee = employeeService.createEmployee(dto);
-        return newEmployee;
+        return employeeService.createEmployee(dto);
     }
 
     @GetMapping("/employee/{id}")

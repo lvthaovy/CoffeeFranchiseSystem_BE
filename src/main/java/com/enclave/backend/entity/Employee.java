@@ -1,8 +1,10 @@
 package com.enclave.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -27,4 +29,12 @@ public class Employee extends AbstractUser {
     @ManyToOne
 //    @JoinColumn(name = "role_id")
     private Role role;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdBy")
+    private Set<Order> orderCreate;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "canceledBy")
+    private Set<Order> orderCancel;
 }
