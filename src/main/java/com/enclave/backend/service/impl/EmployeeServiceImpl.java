@@ -24,43 +24,63 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    BranchRepository branchRepository;
+    private BranchRepository branchRepository;
 
     @Autowired
-    EmployeeConverter employeeConverter;
+    private EmployeeConverter employeeConverter;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncode;
 
     @Override
     public Employee createEmployee(EmployeeDTO dto) {
-        Branch branch = branchRepository.findById(dto.getBranchId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + dto.getBranchId()));
-        Role role = roleRepository.findById(dto.getRoleId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid role Id:" + dto.getRoleId()));
+        short branchId = dto.getBranchId();
+        Branch branch = branchRepository.findById(branchId).orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + branchId));
+
+        short roleId = dto.getRoleId();
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new IllegalArgumentException("Invalid role Id:" + roleId));
 
         Employee newEmployee = employeeConverter.toEntity(dto);
-            newEmployee.setRole(role);
-            newEmployee.setBranch(branch);
-            newEmployee.setPassword(passwordEncode.encode("123123"));
-            newEmployee.setStatus("active");
-            employeeRepository.save(newEmployee);
-        return newEmployee;
+
+        newEmployee.setRole(role);
+        newEmployee.setBranch(branch);
+        newEmployee.setPassword(passwordEncode.encode("123123"));
+        newEmployee.setStatus("active");
+        employeeRepository.save(newEmployee);
+        return employeeRepository.save(newEmployee);
     }
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        Employee oldEmployee = employeeRepository.findById(employee.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + employee.getId()));
 
+        short employeeId = employee.getId();
+        Employee oldEmployee = employeeRepository.findById(employeeId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + employeeId));
 
-        return null;
+        short branchId = employee.getBranch().getId();
+
+        Branch branch = branchRepository.findById(branchId).orElseThrow(() -> new IllegalArgumentException("Invalid branch Id:" + branchId));
+
+        oldEmployee.setName(employee.getName());
+        oldEmployee.setPhone(employee.getPhone());
+        oldEmployee.setBirth(employee.getBirth());
+        oldEmployee.setAvatar(employee.getAvatar());
+        oldEmployee.setGender(employee.getGender());
+        oldEmployee.setAddress(employee.getAddress());
+        oldEmployee.setUsername(employee.getUsername());
+        oldEmployee.setBranch(branch);
+        oldEmployee.setPassword(passwordEncode.encode(employee.getPassword()));
+        return employeeRepository.save(oldEmployee);
+    }
+
+    @Override
+    public Employee getEmployeeById(short id) {
+        return employeeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
     }
 
     @Override
@@ -71,20 +91,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Employee user = employeeRepository.findByUsername(username);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password");
         }
 
 //		return new User(user.getUsername(), user.getPassword(), authorities);
         return new CustomUserDetails(user);
     }
+
     @Transactional
     public UserDetails loadUserById(Short id) {
         Optional<Employee> optionalUser = employeeRepository.findById(id);
         Employee user = optionalUser.get();
-        if(user == null) {
-            throw	new UsernameNotFoundException("user not found: " + id);
+        if (user == null) {
+            throw new UsernameNotFoundException("user not found: " + id);
         }
         return new CustomUserDetails(user);
     }
+
 }

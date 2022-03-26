@@ -1,14 +1,16 @@
 package com.enclave.backend.entity;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
-@Table(name="employee")
-public class Employee extends AbstractUser{
+@Table(name = "employee")
+public class Employee extends AbstractUser {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -30,4 +32,11 @@ public class Employee extends AbstractUser{
 //    @JoinColumn(name = "role_id")
     private Role role;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdBy")
+    private Set<Order> orderCreate;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "canceledBy")
+    private Set<Order> orderCancel;
 }

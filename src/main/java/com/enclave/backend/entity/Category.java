@@ -6,10 +6,11 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
 @Data
 @Entity
-@Table(name = "branch")
-public class Branch {
+@Table(name = "category")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,13 +20,7 @@ public class Branch {
     @Column
     private String name;
 
-    @Column
-    private String address;
-
     @JsonIgnore
-    @OneToMany(mappedBy = "branch")
-    private Set<Employee> employees = new HashSet<>();
-
-    @Column
-    private String status;
+    @OneToMany(mappedBy = "category")
+    private Set<Product> products = new HashSet<>();
 }

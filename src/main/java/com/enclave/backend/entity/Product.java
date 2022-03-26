@@ -1,15 +1,13 @@
 package com.enclave.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+
 @Data
 @Entity
-@Table(name = "branch")
-public class Branch {
+@Table(name = "product")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +17,15 @@ public class Branch {
     @Column
     private String name;
 
-    @Column
-    private String address;
+    @ManyToOne
+//    @JoinColumn(name = "category_id")
+    private Category category;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "branch")
-    private Set<Employee> employees = new HashSet<>();
+    @Column
+    private String image;
+
+    @Column
+    private double price;
 
     @Column
     private String status;
