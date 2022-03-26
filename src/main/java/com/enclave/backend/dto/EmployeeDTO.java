@@ -12,7 +12,7 @@ public class EmployeeDTO {
     private short roleId;
     private String name;
     private String username;
-    private String password;
+//    private String password;
     private String gender;
     private String address;
     private String avatar;

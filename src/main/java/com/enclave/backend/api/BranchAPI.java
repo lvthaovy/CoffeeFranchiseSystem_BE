@@ -14,7 +14,7 @@ public class BranchAPI {
     @Autowired
     private BranchService branchService;
 
-    @GetMapping("/branch")
+    @GetMapping("/branchs")
     public List<Branch> getBranchs(){
         return branchService.getBranchs();
     }
