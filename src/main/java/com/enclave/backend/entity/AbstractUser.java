@@ -29,5 +29,4 @@ public abstract class AbstractUser {
 
     @Column
     private Date birth;
-
 }

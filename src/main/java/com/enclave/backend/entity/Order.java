@@ -3,7 +3,16 @@ package com.enclave.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -12,10 +21,6 @@ import java.util.Set;
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
     @Id
     @Column
@@ -39,12 +44,15 @@ public class Order implements Serializable {
     @JoinColumn(name = "canceledBy")
     private Employee canceledBy;
 
-    public enum Status {
-        CREATED, CANCELED
-    }
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @JsonIgnore
     @OneToMany(mappedBy = "order")
     private Set<OrderDetail> orderDetails;
 
+    public enum Status{
+        CREATED, CANCELED
+    }
 }

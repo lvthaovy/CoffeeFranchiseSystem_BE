@@ -3,7 +3,13 @@ package com.enclave.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,10 +18,6 @@ import java.util.Set;
 @Entity
 @Table(name = "discount")
 public class Discount {
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
     @Id
     @Column
@@ -36,6 +38,10 @@ public class Discount {
     @JsonIgnore
     @OneToMany(mappedBy = "discount")
     private Set<Order> orders;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public enum Status {
         UPCOMING, HAPPENING, EXPIRED

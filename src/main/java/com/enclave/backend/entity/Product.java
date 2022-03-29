@@ -2,16 +2,21 @@ package com.enclave.backend.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
 
 @Data
 @Entity
 @Table(name = "product")
 public class Product {
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +36,14 @@ public class Product {
     @Column
     private double price;
 
-    public enum Status {
-        AVAILABLE, UNAVAILABLE
-    }
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToOne(mappedBy = "product")
     private OrderDetail orderDetail;
+
+    public enum Status{
+        AVAILABLE, UNAVAILABLE
+    }
 }
