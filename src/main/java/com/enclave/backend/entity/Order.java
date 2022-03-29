@@ -38,12 +38,13 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "canceledBy")
     private Employee canceledBy;
-    @JsonIgnore
-    @OneToMany(mappedBy = "order")
-    private Set<OrderDetail> orderDetails;
 
     public enum Status {
         CREATED, CANCELED
     }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "order")
+    private Set<OrderDetail> orderDetails;
 
 }

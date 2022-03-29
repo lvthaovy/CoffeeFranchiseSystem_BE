@@ -12,10 +12,6 @@ import java.util.Set;
 @Table(name = "branch")
 public class Branch {
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -30,6 +26,10 @@ public class Branch {
     @JsonIgnore
     @OneToMany(mappedBy = "branch")
     private Set<Employee> employees = new HashSet<>();
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public enum Status {
         ACTIVE, INACTIVE

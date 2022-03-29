@@ -30,10 +30,11 @@ public class Product {
 
     @Column
     private double price;
-    @OneToOne(mappedBy = "product")
-    private OrderDetail orderDetail;
 
     public enum Status {
         AVAILABLE, UNAVAILABLE
     }
+
+    @OneToOne(mappedBy = "product")
+    private OrderDetail orderDetail;
 }
