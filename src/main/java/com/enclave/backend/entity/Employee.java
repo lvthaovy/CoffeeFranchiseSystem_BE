@@ -11,6 +11,10 @@ import java.util.Set;
 @Table(name = "employee")
 public class Employee extends AbstractUser {
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -22,8 +26,10 @@ public class Employee extends AbstractUser {
     @Column
     private String username;
 
-    @Column
-    private String status;
+    public enum Status {
+        ACTIVE, INACTIVE
+    }
+
     @ManyToOne
 //    @JoinColumn(name = "branch_id")
     private Branch branch;

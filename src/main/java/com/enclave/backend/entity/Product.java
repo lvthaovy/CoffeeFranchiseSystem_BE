@@ -9,6 +9,10 @@ import javax.persistence.*;
 @Table(name = "product")
 public class Product {
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -26,7 +30,10 @@ public class Product {
 
     @Column
     private double price;
+    @OneToOne(mappedBy = "product")
+    private OrderDetail orderDetail;
 
-    @Column
-    private String status;
+    public enum Status {
+        AVAILABLE, UNAVAILABLE
+    }
 }

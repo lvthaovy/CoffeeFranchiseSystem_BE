@@ -1,5 +1,6 @@
 package com.enclave.backend.dto;
 
+import com.enclave.backend.entity.Order;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,4 +13,5 @@ public class OrderDTO {
     private Date createdAt;
     private short createdByEmpId;
     private short canceledByEmpId;
+    private Order.Status status;
 }

@@ -1,5 +1,6 @@
 package com.enclave.backend.dto;
 
+import com.enclave.backend.entity.Product;
 import lombok.Data;
 
 @Data
@@ -10,5 +11,5 @@ public class ProductDTO {
     private short categoryId;
     private double price;
     private String image;
-//    private String status;
+    Product.Status status;
 }

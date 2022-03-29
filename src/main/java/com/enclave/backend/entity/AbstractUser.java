@@ -1,5 +1,6 @@
 package com.enclave.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ public abstract class AbstractUser {
     private String name;
 
     @Column
+    @JsonIgnore
     private String password;
 
     @Column

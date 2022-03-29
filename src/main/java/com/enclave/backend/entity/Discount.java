@@ -13,6 +13,10 @@ import java.util.Set;
 @Table(name = "discount")
 public class Discount {
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @Id
     @Column
     private String code;
@@ -33,6 +37,7 @@ public class Discount {
     @OneToMany(mappedBy = "discount")
     private Set<Order> orders;
 
-    @Column
-    private String status;
+    public enum Status {
+        UPCOMING, HAPPENING, EXPIRED
+    }
 }

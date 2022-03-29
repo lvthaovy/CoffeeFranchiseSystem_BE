@@ -12,7 +12,7 @@ public class ProductConverter {
         entity.setName(dto.getName());
         entity.setPrice(dto.getPrice());
         entity.setImage(dto.getImage());
-//        entity.setStatus("");
+//        entity.setStatus(dto.getStatus());
         return entity;
     }
 }

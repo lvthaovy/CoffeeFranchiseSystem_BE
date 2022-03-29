@@ -1,14 +1,21 @@
 package com.enclave.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order implements Serializable {
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @Id
     @Column
@@ -31,7 +38,12 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "canceledBy")
     private Employee canceledBy;
+    @JsonIgnore
+    @OneToMany(mappedBy = "order")
+    private Set<OrderDetail> orderDetails;
 
-    @Column
-    private String status;
+    public enum Status {
+        CREATED, CANCELED
+    }
+
 }

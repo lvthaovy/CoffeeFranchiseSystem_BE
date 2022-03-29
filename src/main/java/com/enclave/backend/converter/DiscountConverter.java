@@ -8,11 +8,12 @@ import org.springframework.stereotype.Component;
 public class DiscountConverter {
     public Discount toEntity(DiscountDTO dto) {
         Discount entity = new Discount();
+        entity.setCode(dto.getCode());
         entity.setPercent(dto.getPercent());
         entity.setTitle(dto.getTitle());
         entity.setStartedAt(dto.getStartedAt());
         entity.setEndedAt(dto.getEndedAt());
-        entity.setStatus("UP COMING");
+        entity.setStatus(Discount.Status.UPCOMING);
         return entity;
     }
 }
